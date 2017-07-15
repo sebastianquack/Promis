@@ -1,0 +1,25 @@
+<ion-header no-border>
+  <ion-navbar transparent>
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title></ion-title>
+    
+    <ion-buttons end>
+      <!--button ion-button icon-only class="options-button" (click)="showOptions()">
+        <ion-icon name="more"></ion-icon>
+      </button-->
+    </ion-buttons>
+    
+  </ion-navbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div id="map" style="height: 100%; width:100%;"></div>
+  <div id="controls">
+    <div id="button-locate" (click)="setLocation()"></div>
+    <div id="button-add" (click)="enterNew()"></div>
+  </div>
+</ion-content>

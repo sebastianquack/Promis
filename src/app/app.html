@@ -1,1 +1,14 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content" persistent="true" id="menu1">
+  <ion-content>
+  	<div class="menu-logo"></div>
+    <ion-list>
+      <ion-item (click)="openPage('list')">Promis List</ion-item>
+      <ion-item (click)="openPage('transfers')">Transfers</ion-item>
+      <ion-item (click)="openPage('settings')">Options</ion-item>
+      <ion-item (click)="openPage('how')">How To Play</ion-item>            
+      <ion-item (click)="openPage('about')">About</ion-item>      
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav #content [root]="rootPage"></ion-nav>

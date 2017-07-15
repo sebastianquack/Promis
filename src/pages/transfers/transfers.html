@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Transfers
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-group>
+    <ion-item-divider color="light">
+      Special
+    </ion-item-divider>
+    <div padding>
+      <ion-range min="50" max="5000" [(ngModel)]="downloadRange" color="secondary">
+        <ion-label range-left>50m</ion-label>
+        <ion-label range-right>5km</ion-label>
+      </ion-range>
+      <button color="dark" outline ion-button block (click)="downloadArea()">Download Promises around you</button>
+    </div>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">
+      Transfers
+    </ion-item-divider>
+    <ng-container *ngFor="let transfer of transfers | async">
+      <ion-item>
+        <b>{{transferManager.getTitle(transfer)}}</b><br>
+        {{transfer.type}} / {{transfer.status}}<br>
+        {{transfer.info}}<br>
+        Progress: {{transfer.progress}}<br>
+        <button *ngIf="transfer.status=='queued' || transfer.status=='active'" ion-button small color="dark" outline (click)="transferManager.remove(transfer)">cancel</button>
+        <button *ngIf="transfer.status=='done'" ion-button small color="dark" outline (click)="transferManager.remove(transfer)">done</button>
+      </ion-item>
+    </ng-container>
+    <div padding>
+        <button *ngIf="anyDone()" color="dark" outline ion-button block (click)="clearDone()">Clear done transfers</button>
+    </div>
+  </ion-item-group>
+</ion-content>

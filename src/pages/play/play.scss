@@ -1,0 +1,23 @@
+page-play {
+	
+	.branch-buttons {
+		position: absolute;
+		z-index: 100;
+		bottom: 33%;
+		width: 100%;
+	}
+
+	.branch-buttons button {
+		margin-bottom: 10px;
+		width: 100%;
+	}
+
+	.add-button {
+		margin-top: 50px;
+	}
+
+	video::-webkit-media-controls-start-playback-button {
+  		display: none;
+	}
+
+}

@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Edit
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="save()">Save</button>
+      <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<ion-item-group>
+	<ion-item-divider color="light">
+    Basics
+  </ion-item-divider>
+  <ion-item>
+    	<ion-label>Title</ion-label>
+    	<ion-input type="text" [(ngModel)]="localVideo.title"></ion-input>
+  </ion-item>
+  <ion-item>
+      <div class="decorated-thumbnail {{videoManager.getIconData(localVideo).class}}">
+        <img class="video-thumbnail" src="{{localVideo.thumbPathRel ? (videoManager.thumbPath + localVideo.thumbPathRel) : localVideo.thumbPath}}"/>
+        <img class="video-marker" src="{{videoManager.getIconData(localVideo).path}}"/>
+      </div>
+  </ion-item>
+  <ion-item>
+      <ion-label class="branch-label">This video is as Branch</ion-label>
+      <ion-toggle [(ngModel)]="localVideo.branch"></ion-toggle>
+  </ion-item>
+  <ion-item>
+      <ion-label class="restricted-label">Restrict viewing to original location</ion-label>
+      <ion-toggle [(ngModel)]="localVideo.restrictLocation"></ion-toggle>
+  </ion-item>
+</ion-item-group>
+
+<ion-item-group>
+  <ion-item-divider color="light">
+    Branch options to present at the end of this video
+  </ion-item-divider>
+
+  <ng-container *ngFor="let video of localVideos">
+  <ion-item *ngIf="localVideo.videoUuid != video.videoUuid">
+    <ion-label class="branch-toggle"><img class="branch-thumb" src="{{video.thumbPathRel ? (videoManager.thumbPath + video.thumbPathRel) : video.thumbPath}}"> {{videoManager.formatTitle(video)}}</ion-label>
+    <ion-toggle [(ngModel)]="branchToggles[video.videoUuid]" (ngModelChange)="branchSave()"></ion-toggle>
+  </ion-item>
+  </ng-container>
+
+</ion-item-group>
+
+<ion-item-group>
+  <ion-item-divider color="light">
+    Actions
+  </ion-item-divider>
+  <div padding>
+    <button color="dark" outline ion-button block (click)="removeVideo()">Delete video</button>
+    <button *ngIf="localVideo.uploaded || localVideo.downloaded" color="dark" outline ion-button block (click)="removeLocalCopy()">Remove local copy</button>
+  </div>
+</ion-item-group>  
+
+  
+  
+
+
+</ion-content>

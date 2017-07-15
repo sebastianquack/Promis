@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+
+    <ion-title>
+      Promis List
+    </ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item-group class="list-options">
+    <ion-item>
+      <ion-label>Show Branches</ion-label>
+      <ion-toggle [(ngModel)]="showBranches"></ion-toggle>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ng-container *ngFor="let video of videos | async">
+
+      <ion-item *ngIf="((!video.branch) || (video.branch && this.showBranches)) && (video.downloaded || video.localOrigin && !video.deleted)" (click)="enterDetail(video.videoUuid)" class="item">
+
+        <ion-thumbnail item-left>
+          <div class="decorated-thumbnail {{this.videoManager.getIconData(video).class}}">
+            <img class="video-thumbnail" src="{{video.thumbPathRel ? (videoManager.thumbPath + video.thumbPathRel) : video.thumbPath}}"/>
+            <img class="video-marker" src="{{this.videoManager.getIconData(video).path}}"/>
+          </div>
+        </ion-thumbnail>   
+
+        <h2>{{videoManager.formatTitle(video)}}</h2>
+
+        <div>
+          <!--button ion-button small (click)="presentActionSheet(video._id)">options</button-->
+          <button ion-button small color="dark" outline>Details</button>
+        </div>
+
+      </ion-item>
+
+    </ng-container>
+  </ion-item-group>
+
+</ion-content>
+
+
+<div id="controls">
+  <div id="button-add" (click)="enterNew()"></div>
+</div>  

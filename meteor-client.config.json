@@ -1,0 +1,16 @@
+{
+  "runtime": {
+    "DDP_DEFAULT_CONNECTION_URL": "https://cryptic-beach-81693.herokuapp.com"
+  },
+  "import": [  
+    "meteor-base@1.0.4",
+    "mongo",                  
+    "tracker@1.1.1",           
+    "autopublish@1.0.7",    
+    "insecure@1.0.7",       
+    "barbatus:typescript",
+    "lepozepo:s3",
+    "jeffm:local-persist",
+    "jabbslad:basic-auth"
+  ]
+}

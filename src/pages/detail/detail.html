@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-navbar>
+
+  
+    <ion-title *ngIf="localVideo">{{videoManager.formatTitle(localVideo)}}</ion-title>
+    <ion-title *ngIf="remoteVideo">{{videoManager.formatTitle(remoteVideo)}}</ion-title>
+
+    <ion-buttons end>
+      <button class="back-to-map-button" ion-button (click)="backToMap()"><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+<ion-item-group>
+  <ion-item>
+    <div *ngIf="localVideo" class="decorated-thumbnail {{videoManager.getIconData(localVideo).class}}">  
+  		<img class="video-thumbnail" src="{{localVideo.thumbPathRel ? (videoManager.thumbPath + localVideo.thumbPathRel) : localVideo.thumbPath}}"/>
+      <img class="video-marker" src="{{videoManager.getIconData(localVideo).path}}" (click)="enterPlay(localVideo.videoUuid)"/>
+    </div>
+    <div *ngIf="remoteVideo" class="decorated-thumbnail icon-type-remote">  
+      <img class="video-thumbnail" src="{{remoteVideo.thumbUrl}}"/>
+      <img class="video-marker" src="{{videoManager.getRemoteIconData().path}}" (click)="enterPlay(remoteVideo.videoUuid, true)"/>
+    </div>    
+  </ion-item>
+</ion-item-group>
+  
+<ion-item-group no-lines>
+	<ion-item-divider color="light">
+    Info
+  </ion-item-divider>
+  
+  <ion-item *ngIf="localVideo">
+    	<div>Author: {{videoManager.getAuthor(localVideo)}}</div>
+      <div>Created: {{videoManager.formatDate(localVideo.createdAt)}}</div>
+      <div>Duration: {{videoManager.formatDuration(localVideo.duration)}}</div>
+      <div>Transfer Info: {{transferManager.getInfo(localVideo, "local")}}</div>
+  </ion-item>
+
+  <ion-item *ngIf="remoteVideo && !settingsManager.settings.offline">
+    <div>Title: {{videoManager.formatTitle(remoteVideo)}}</div>
+    <div>Author: {{videoManager.getAuthor(remoteVideo)}}</div>
+    <div>Created: {{videoManager.formatDate(remoteVideo.createdAt)}}</div>
+    <div>Duration: {{videoManager.formatDuration(remoteVideo.duration)}}</div>
+    <div>Filesize: {{videoManager.formatSize(remoteVideo.size)}}</div>
+    <div>Transfer Info: {{transferManager.getInfo(remoteVideo, "remote")}}</div>
+  </ion-item>
+
+  <ion-item-divider color="light">
+    Branches
+  </ion-item-divider>
+  
+  <ion-item *ngIf="localVideo || remoteVideo">
+      <div *ngIf="branchingVideos.length">On your device: 
+        <img *ngFor="let video of branchingVideos" class="branch-thumb" (click)="branchClick(video)" src="{{video.thumbPathRel ? (videoManager.thumbPath + video.thumbPathRel) : video.thumbPath}}">
+      </div>
+      <div *ngIf="remoteBranchingVideos.length && !settingsManager.settings.offline">Available online: 
+        <img *ngFor="let video of remoteBranchingVideos" class="branch-thumb" (click)="branchClick(video, 'remote')" src="{{video.thumbUrl}}">
+      </div>
+  </ion-item>
+ 
+</ion-item-group>
+
+<ion-item-group>
+<ion-item-divider color="light">
+    Actions
+  </ion-item-divider>
+  <div padding>
+
+    <button *ngIf="shortLink" color="dark" outline ion-button block (click)="clipboardMessage()">Share link</button>
+
+    <button *ngIf="localVideo" color="dark" outline ion-button block (click)="newBranch()">Record a new Branch</button>
+
+    <ng-container *ngIf="localVideo">
+      <ng-container *ngIf="localVideo.localOrigin">
+        <button color="dark" outline ion-button block (click)="enterEdit(localVideo._id)">Edit</button>
+        <button color="dark" outline *ngIf="videoManager.uploadButton(localVideo) && !settingsManager.settings.offline" ion-button block (click)="upload()">Upload</button>
+        <button color="dark" outline *ngIf="videoManager.unpublishButton(localVideo) && !settingsManager.settings.offline" ion-button block (click)="unpublish()">Unpublish</button>
+      </ng-container>
+      <button color="dark" outline *ngIf="videoManager.undownloadButton(localVideo)" ion-button block (click)="undownload()">Undownload</button>
+    </ng-container>
+
+    <ng-container *ngIf="remoteVideo && !settingsManager.settings.offline">
+      <button color="dark" outline *ngIf="!videoManager.downloaded(remoteVideo.videoUuid)" ion-button block (click)="download()">Download</button>
+      <button color="dark" outline ion-button block (click)="flag()">Flag for problematic content</button>
+    </ng-container>
+
+
+  </div>
+</ion-item-group>  
+  
+
+</ion-content>

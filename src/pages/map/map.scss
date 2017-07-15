@@ -1,0 +1,43 @@
+page-map {
+	div.savetiles {
+		display: none;
+	}
+}
+
+.leaflet-shadow-pane img,
+.leaflet-marker-pane img.onlineIcon {
+  border-radius: 50%;
+}
+
+#controls {
+  position: absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  z-index: 1000;
+
+  #button-locate, #button-add {
+    position: absolute;    
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;    
+    bottom: 15px;    
+    cursor: pointer;
+    background-size: contain;
+  }  
+
+  #button-locate {
+    left: 20px;
+    background-image: url('../assets/markers/PROMIS_markers_your-location-button.png');
+  }
+
+  #button-add {
+    right: 20px;
+    background-image: url('../assets/markers/PROMIS_markers_make-new.png');
+    position: fixed;
+  }  
+}
+
+.scroll-content {
+  padding-top: 0px !important;
+}

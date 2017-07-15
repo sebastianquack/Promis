@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+
+    <ion-title>
+      Options
+    </ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+<ion-item-group>
+	<ion-item-divider color="light">
+    Your Profile
+  </ion-item-divider>
+  <ion-item>
+      <ion-label fixed>Username</ion-label>
+      <ion-input type="text" [(ngModel)]="settings.username"></ion-input>
+  </ion-item>
+  <ion-item>
+    	<ion-label fixed>Email-Adress</ion-label>
+    	<ion-input type="text" [(ngModel)]="settings.email"></ion-input>
+  </ion-item>
+</ion-item-group>
+
+<ion-item-group>
+  <ion-item-divider color="light">
+    Special
+  </ion-item-divider>
+
+  <ion-item>
+    <ion-label>Offline Mode</ion-label>
+    <ion-toggle [(ngModel)]="settings.offline" (ionChange)="toggleOffline()"></ion-toggle>
+  </ion-item>
+  <div padding>
+    <button ion-button color="dark" outline (click)="saveTiles()">
+      Download Map Tiles
+    </button>
+
+    <button ion-button color="dark" outline (click)="clearTiles()">
+      Clear Map Tiles
+    </button>
+
+    <div>Tiles saved: {{geoManager.tilesSaved}}/{{geoManager.tilesToSave}}</div>
+  </div>
+</ion-item-group>

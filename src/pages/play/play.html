@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{localVideo ? videoManager.formatTitle(localVideo) : videoManager.formatTitle(remoteVideo)}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<video *ngIf="localVideo" #videoplayer (ended)="videoEnded()" class="video-player-full" src="{{src(localVideo)}}" poster="{{videoManager.thumbPath + localVideo.thumbPathRel}}" playsinline autoplay></video>
+
+<video *ngIf="remoteVideo" #videoplayer (ended)="videoEnded()" class="video-player-full" src="{{remoteVideo.url}}" poster="{{remoteVideo.thumbUrl}}" playsinline></video>
+
+<div class="branch-buttons" padding *ngIf="showBranches">
+	<ng-container *ngIf="localVideo" >
+  		<button *ngFor="let video of branchingVideos" ion-button color="light" (click)="loadVideo(video, true)" full>{{videoManager.formatTitle(video)}}</button>
+		<button class="add-button" ion-button color="dark" (click)="newBranch()">Record a new Branch</button>
+	</ng-container>
+	<ng-container *ngIf="remoteVideo" class="branch-buttons" padding>
+  		<button *ngFor="let video of remoteBranchingVideos" ion-button color="light" (click)="loadVideo(video, false)" full>{{videoManager.formatTitle(video)}}</button>
+	</ng-container>  	
+  	
+</div>
